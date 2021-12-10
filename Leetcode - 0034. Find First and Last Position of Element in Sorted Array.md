@@ -48,6 +48,11 @@ class Solution {
         while(left < right) {
             int mid = left + (right - left) / 2;
             if(nums[mid] == target) {
+            /*
+            如果找到目标值，则需要将right移动至mid位置，因为有可能这个target左边还有目标值；
+            但也不可以直接写right = mid - 1,因为有可能左边没有target值，如果减一了就略过了目标值了，
+            找右边第一个值思路同此。
+            */
                 right = mid;
             } else if (nums[mid] > target) {
                 right = mid;
@@ -75,28 +80,33 @@ class Solution {
         return nums[left] == target ? left : -1;
     }
 }
+```
 
+__例子1：__  
+target number = 6   
+4 5 6 6 7              
+L   M   R   
+L M R   
+    L   
+备注：当目标值在其中， 当left = right 时候可以直接 return left   
 
-例子1：
-target number = 6
-4 5 6 6 7            left < right  return left
-L   M   R
-L M R
-    L
-
-target number = 4
-                    left < right  return left
+__例子2：__  
+target number = 4   
+                    
 4    5 6 7
 L    m   R
 L(m) R
 R
+备注：当目标值在其中， 当left = right 时候也可以直接 return left
 
-target number = 6
-4 5 7    8          left < right return left == target ? left : -1;
-L M      R
-    L(M) R
-    R
-```
+__例子3：__      
+target number = 6   
+4 5 7    8          left < right return left == target ? left : -1;   
+L M      R   
+    L(M) R   
+    R   
+备注：当目标值不在其中， 当left = right 时候可以如果也是return left那得到的不是目标值，所以这里加个判断   
+
 __时间复杂度:__ log(N)  
 __空间复杂度:__ O(1)
 
